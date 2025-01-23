@@ -3,6 +3,7 @@ import Book from '../models/book.js';
 
 export const addToCart = async (req, res) => {
   try {
+    console.log('comming');
     const { bookId, quantity } = req.body;
     const userId = req.user.id;
 

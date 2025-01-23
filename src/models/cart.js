@@ -25,13 +25,24 @@ const Cart = {
   },
 
   async updateItemQuantity(id, quantity) {
-    const sql = 'UPDATE cart_items SET quantity = $1 WHERE id = $2 RETURNING *';
-    const { rows } = await query(sql, [quantity, id]);
-    return rows[0];
+    console.log(id, quantity);
+    const sql = 'UPDATE cart_items SET quantity = $1 WHERE book_id = $2 RETURNING *';
+    try {
+      const { rows } = await query(sql, [quantity, id]);
+      if (rows.length === 0) {
+        console.error('No matching row found for the provided ID');
+      }
+      console.log('Updated Rows:', rows);
+      return rows[0];
+    } catch (error) {
+      console.error('Error executing query:', error.message);
+      throw error;
+    }
+    
   },
 
   async removeItem(id) {
-    const sql = 'DELETE FROM cart_items WHERE id = $1';
+    const sql = 'DELETE FROM cart_items WHERE book_id = $1';
     await query(sql, [id]);
   },
 

@@ -1,4 +1,4 @@
-import  pool from '../config/database.js';
+import pool from '../config/database.js';
 
 const Order = {
   async create(userId, items, totalPrice) {
@@ -59,7 +59,7 @@ const Order = {
       GROUP BY o.id
       ORDER BY o.order_date DESC
     `;
-    const { rows } = await query(sql, [userId]);
+    const { rows } = await pool.query(sql, [userId]);
     return rows;
   },
 
@@ -70,7 +70,7 @@ const Order = {
       WHERE id = $2
       RETURNING *
     `;
-    const { rows } = await query(sql, [status, orderId]);
+    const { rows } = await pool.query(sql, [status, orderId]);
     return rows[0];
   }
 };
