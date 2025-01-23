@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 export const signup = async (req, res) => {
   try {
-    console.log("comming");
     const { firstName, lastName, email, password, location, phoneNumber } =
       req.body;
     const existingUser = await User.findByEmail(email);
@@ -31,7 +30,6 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    console.log("comming");
     const { email, password } = req.body;
     const user = await User.findByEmail(email);
     if (!user) {
