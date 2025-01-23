@@ -1,20 +1,20 @@
-const jwt = require("jsonwebtoken")
-import Admin from "../models/admin.js"
-const adminAuthMiddleware = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(" ")[1]
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const admin = await Admin.findByPk(decoded.adminId)
+import jwt from 'jsonwebtoken';
 
-    if (!admin) {
-      throw new Error()
-    }
-
-    req.admin = admin
-    next()
-  } catch (error) {
-    res.status(401).json({ message: "Please authenticate as admin" })
+const adminAuthMiddleware = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
   }
-}
 
-export default adminAuthMiddleware
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.admin = decoded.admin; // Assuming `admin` is the payload in the token
+    next();
+  } catch (err) {
+    res.status(401).json({ message: 'Token is not valid' });
+  }
+};
+
+export default adminAuthMiddleware;

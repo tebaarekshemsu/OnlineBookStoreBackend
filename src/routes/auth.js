@@ -3,7 +3,7 @@ import { signup, login, getMe } from "../controllers/authController.js";
 import auth from "../middleware/auth.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-// import Admin from "../models/admin.js";
+import Admin from "../models/admin.js";
 const router = express.Router();
 
 router.post("/signup", signup);

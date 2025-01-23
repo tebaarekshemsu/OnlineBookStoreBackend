@@ -1,8 +1,8 @@
-const express = require("express");
-const Book = require("../models/book");
-const User = require("../models/user");
-const Order = require("../models/order");
-import adminAuthMiddleware from "../middleware/adminAuth";
+import express from "express";
+import Book from "../models/book.js";
+import User from "../models/user.js";
+import Order from "../models/order.js";
+import adminAuthMiddleware from "../middleware/adminAuth.js";
 
 const router = express.Router();
 
@@ -53,7 +53,7 @@ router.put("/books/:id", async (req, res) => {
 });
 
 // Get all users
-router.get("/users", async (req, res) => {
+router.get("/users", async (res) => {
   try {
     const users = await User.findAll({
       attributes: { exclude: ["password"] },
@@ -83,7 +83,7 @@ router.put("/orders/:id", async (req, res) => {
 });
 
 // Get all orders
-router.get("/orders", async (req, res) => {
+router.get("/orders", async (res) => {
   try {
     const orders = await Order.findAll({
       include: [
