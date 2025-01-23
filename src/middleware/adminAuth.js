@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken")
-const { Admin } = require("../models")
-
+import Admin from "../models/admin.js"
 const adminAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1]
@@ -18,4 +17,4 @@ const adminAuthMiddleware = async (req, res, next) => {
   }
 }
 
-module.exports = adminAuthMiddleware
+export default adminAuthMiddleware
